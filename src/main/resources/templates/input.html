@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<form th:object="${newFlavor}" th:action="@{/update/{id}(id=${newFlavor.id})}" method="post">
+<form th:object="${newFlavor}" th:action="@{/update/{id}(id=${newFlavor.id})}" method="post" name="form" onsubmit="return checkForm(form)">
 Flavor: <input name="flavor" size="15" th:field="*{flavor}"><br/>
 Toppings: <input name="toppings" size="15" th:field="*{toppings}"><br/>
 Number of Scoops: <input name="numScoops" size="1" th:field="*{numScoops}"><br/>
@@ -14,5 +14,44 @@ Number of Scoops: <input name="numScoops" size="1" th:field="*{numScoops}"><br/>
 </form>
 
 <a href="viewAll">View all flavors</a>
+
+<script type="text/javascript">
+	function checkForm(form){
+		if(form.flavor.value == ""){
+			alert("Please input flavor");
+			form.flavor.focus();
+			return false;
+		}
+		if(form.toppings.value == ""){
+			alert("Please input topping");
+			form.toppings.focus();
+			return false;
+		}
+		if(form.numScoops.value == 0 || form.numScoops.value == ""){
+			alert("Please input number of scoops");
+			form.numScoops.focus();
+			return false;
+		}
+		var re = /^[\w ]+$/;
+		
+		if(!re.test(form.flavor.value)){
+			alert("Error: Input contains invalid characters");
+			form.flavor.focus();
+			return false;
+		}
+		if(!re.test(form.toppings.value)){
+			alert("Error: Input contains invalid characters");
+			form.toppings.focus();
+			return false;
+		}
+		if(!re.test(form.numScoops.value)){
+			alert("Error: Input contains invalid characters");
+			form.numScoops.focus();
+			return false;
+		}
+		
+		return true;
+	}
+</script>
 </body>
 </html>
